@@ -32,5 +32,4 @@ final class UserHealthProfile {
     
     return (weightInKilograms/(heightInMeters*heightInMeters))
   }
-  
 }

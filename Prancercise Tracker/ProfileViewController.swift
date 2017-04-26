@@ -55,18 +55,8 @@ class ProfileViewController: UITableViewController {
       userHealthProfile = try ProfileDataStore.getUserHealthProfile()
       updateLabels()
     } catch let error {
-      
-      let alert = UIAlertController(title: nil,
-                                    message: error.localizedDescription,
-                                    preferredStyle: .alert)
-      
-      alert.addAction(UIAlertAction(title: "O.K.",
-                                    style: .default,
-                                    handler: nil))
-      
-      present(alert, animated: true, completion: nil)
+      self.displayAlert(for: error)
     }
-    
   }
   
   private func updateLabels() {
@@ -110,7 +100,7 @@ class ProfileViewController: UITableViewController {
             let height = sample as? HKQuantitySample else {
       
         if let error = error {
-          print(error)
+          self.displayAlert(for: error)
         }
         
         return
@@ -137,7 +127,7 @@ class ProfileViewController: UITableViewController {
       else {
         
         if let error = error {
-          print(error)
+          self.displayAlert(for: error)
         }
         return
       }
@@ -159,6 +149,7 @@ class ProfileViewController: UITableViewController {
     ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex, date: Date())
   }
   
+  //MARK:  UITableView Delegate
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
     guard let section = ProfileSection(rawValue: indexPath.section) else {
@@ -173,6 +164,19 @@ class ProfileViewController: UITableViewController {
     default: break
     }
     
+  }
+  
+  private func displayAlert(for error: Error) {
+    
+    let alert = UIAlertController(title: nil,
+                                  message: error.localizedDescription,
+                                  preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "O.K.",
+                                  style: .default,
+                                  handler: nil))
+    
+    present(alert, animated: true, completion: nil)
   }
   
 }

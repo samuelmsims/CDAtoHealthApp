@@ -20,9 +20,8 @@
  * THE SOFTWARE.
  */
 
-import Foundation
-
 import UIKit
+import HealthKit
 
 class MasterViewController: UITableViewController {
   
@@ -48,7 +47,7 @@ class MasterViewController: UITableViewController {
     
   }
   
-  // MARK: - TableView Delegate
+  // MARK: - UITableView Delegate
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
     if indexPath.section == authorizeHealthKitSection {

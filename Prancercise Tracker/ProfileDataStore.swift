@@ -50,17 +50,18 @@ class ProfileDataStore {
                                     sortDescriptors: [sortDescriptor]) { (query, samples, error) in
     
       DispatchQueue.main.async {
+        
         guard let samples = samples,
-          let mostRecentSample = samples.first as? HKQuantitySample else {
+              let mostRecentSample = samples.first as? HKQuantitySample else {
             
-            if let error = error {
-              completion(nil, error)
+              if let error = error {
+                completion(nil, error)
+              }
+            
+              completion(nil, nil)
               return
-            }
-            
-            completion(nil, nil)
-            return
         }
+        
         completion(mostRecentSample, nil)
       }
     }
