@@ -50,7 +50,25 @@ class ProfileViewController: UITableViewController {
   }
   
   func readProfileInfoFromHealthKit() {
-    print("TODO: update profile Information")
+    
+    do {
+      let userHealthProfile = try ProfileDataStore.getUserHealthProfile()
+      ageLabel.text = "\(userHealthProfile.age)"
+      biologicalSexLabel.text = userHealthProfile.biologicalSex.stringRepresentation
+      bloodTypeLabel.text = userHealthProfile.bloodType.stringRepresentation
+    } catch let error {
+      
+      let alert = UIAlertController(title: nil,
+                                    message: error.localizedDescription,
+                                    preferredStyle: .alert)
+      
+      alert.addAction(UIAlertAction(title: "O.K.",
+                                    style: .default,
+                                    handler: nil))
+      
+      present(alert, animated: true, completion: nil)
+    }
+    
   }
   
   func updateHeight() {
