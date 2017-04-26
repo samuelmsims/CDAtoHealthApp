@@ -75,11 +75,11 @@ class CreateWorkoutTableViewController: UITableViewController {
   }
   
   fileprivate func updateWorkout() {
-    workout = WorkoutBuilder.createWorkout(workoutDate: selectedWorkoutDate,
-                                           workoutStartTime: selectedWorkoutStartTime,
-                                           durationInMinutes: selectedWorkoutDurationInMinutes,
-                                           distance: selectedWorkoutDistance,
-                                           energyBurned: selectedEnergyBurned)
+    workout = WorkoutBuilder.makeWorkout(workoutDate: selectedWorkoutDate,
+                                         workoutStartTime: selectedWorkoutStartTime,
+                                         durationInMinutes: selectedWorkoutDurationInMinutes,
+                                         distance: selectedWorkoutDistance,
+                                         energyBurned: selectedEnergyBurned)
   }
   
 }

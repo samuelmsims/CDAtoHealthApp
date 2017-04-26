@@ -111,7 +111,7 @@ class ProfileViewController: UITableViewController {
       return
     }
     
-    ProfileDataStore.getMostRecent(SampleType: heightSampleType) { (sample, error) in
+    ProfileDataStore.getMostRecentSample(for: heightSampleType) { (sample, error) in
       
       guard let sample = sample,
             let height = sample as? HKQuantitySample else {
@@ -137,7 +137,7 @@ class ProfileViewController: UITableViewController {
       return
     }
     
-    ProfileDataStore.getMostRecent(SampleType: weightSampleType) { (sample, error) in
+    ProfileDataStore.getMostRecentSample(for: weightSampleType) { (sample, error) in
       
       guard let sample = sample,
             let weight = sample as? HKQuantitySample
