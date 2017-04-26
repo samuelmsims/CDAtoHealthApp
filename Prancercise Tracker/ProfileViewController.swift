@@ -42,11 +42,9 @@ class ProfileViewController: UITableViewController {
   private let userHealthProfile = UserHealthProfile()
   
   func updateHealthInfo() {
-    
     readProfileInfoFromHealthKit()
     updateWeight()
     updateHeight()
-    
   }
   
   func readProfileInfoFromHealthKit() {

@@ -66,7 +66,6 @@ class WorkoutsTableViewController: UITableViewController {
     tableView.reloadData()
   }
   
-  // MARK: - Segues
   @IBAction func unwindToWorkouts (_ segue : UIStoryboardSegue) {
     
     if  segue.identifier == WorkoutsSegues.finishedCreatingWorkout.rawValue {

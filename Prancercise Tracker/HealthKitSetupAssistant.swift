@@ -38,28 +38,28 @@ class HealthKitSetupAssistant {
     }
     
     //2. Prepare the data types that will interact with HealthKit
-    guard   let dateOfBirthCharacteristic = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
-            let bloodTypeCharacteristic = HKObjectType.characteristicType(forIdentifier: .bloodType),
-            let biologicalSexCharacteristic = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
-            let bodyMassQuantity = HKObjectType.quantityType(forIdentifier: .bodyMass),
-            let heightQuantity = HKObjectType.quantityType(forIdentifier: .height),
-            let activeEnergyQuantity = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned),
-            let distanceMovedQuantity = HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning) else {
+    guard   let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
+            let bloodType = HKObjectType.characteristicType(forIdentifier: .bloodType),
+            let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
+            let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
+            let height = HKObjectType.quantityType(forIdentifier: .height),
+            let activeEnergy = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned),
+            let distanceMoved = HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning) else {
               
             completion(false, HealthkitSetupError.dataTypeNotAvailable)
             return
     }
     
     //3. Prepare a list of types you want HealthKit to write
-    let healthKitTypesToWrite: Set<HKSampleType> = [bodyMassQuantity,
-                                                    activeEnergyQuantity,
-                                                    distanceMovedQuantity]
+    let healthKitTypesToWrite: Set<HKSampleType> = [bodyMass,
+                                                    activeEnergy,
+                                                    distanceMoved]
     
-    let healthKitTypesToRead: Set<HKObjectType> = [dateOfBirthCharacteristic,
-                                                   bloodTypeCharacteristic,
-                                                   biologicalSexCharacteristic,
-                                                   bodyMassQuantity,
-                                                   heightQuantity,
+    let healthKitTypesToRead: Set<HKObjectType> = [dateOfBirth,
+                                                   bloodType,
+                                                   biologicalSex,
+                                                   bodyMass,
+                                                   height,
                                                    HKObjectType.workoutType()]
 
     let healthKitStore = HKHealthStore()
