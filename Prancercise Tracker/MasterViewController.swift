@@ -30,6 +30,22 @@ class MasterViewController: UITableViewController {
   
   func authorizeHealthKit() {
     
+    HealthKitSetupAssistant.authorizHealthKit { (authorized, error) in
+      
+      guard authorized else {
+        
+        print("HealthKit Was Not Authorized")
+        
+        if let error = error {
+          print(error)
+        }
+        
+        return
+      }
+      
+      print("HealthKit Was Authorized")
+    }
+    
   }
   
   // MARK: - TableView Delegate

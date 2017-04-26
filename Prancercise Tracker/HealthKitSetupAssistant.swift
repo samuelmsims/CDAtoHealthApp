@@ -24,6 +24,55 @@ import HealthKit
 
 class HealthKitSetupAssistant {
   
+  private enum HealthkitSetupError: Error {
+    case notAvailableOnDevice
+    case dataTypeNotAvailable
+  }
   
-  
+  class func authorizHealthKit(completion: @escaping (Bool, Error?) -> Swift.Void) {
+    
+    //1. Check to see if HealthKit Is Available on this device
+    guard HKHealthStore.isHealthDataAvailable() else {
+      completion(false, HealthkitSetupError.notAvailableOnDevice)
+      return
+    }
+    
+    //2. Prepare the data types that will interact with HealthKit
+    guard   let dateOfBirthCharacteristic = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
+            let bloodTypeCharacteristic = HKObjectType.characteristicType(forIdentifier: .bloodType),
+            let biologicalSexCharacteristic = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
+            let bodyMassQuantity = HKObjectType.quantityType(forIdentifier: .bodyMass),
+            let heightQuantity = HKObjectType.quantityType(forIdentifier: .height),
+            let activeEnergyQuantity = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned),
+            let distanceMovedQuantity = HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning) else {
+              
+            completion(false, HealthkitSetupError.dataTypeNotAvailable)
+            return
+    }
+    
+    //3. Prepare a list of types you want HealthKit to write
+    let healthKitTypesToWrite: Set<HKSampleType> = [bodyMassQuantity,
+                                                    activeEnergyQuantity,
+                                                    distanceMovedQuantity]
+    
+    let healthKitTypesToRead: Set<HKObjectType> = [dateOfBirthCharacteristic,
+                                                   bloodTypeCharacteristic,
+                                                   biologicalSexCharacteristic,
+                                                   bodyMassQuantity,
+                                                   heightQuantity,
+                                                   HKObjectType.workoutType()]
+
+    let healthKitStore = HKHealthStore()
+
+    healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite,
+                                        read: healthKitTypesToRead) { (success, error) in
+      
+      guard success else {
+        completion(false, error)
+          return
+      }
+                                          
+      completion(true, nil)
+    }
+  }
 }
