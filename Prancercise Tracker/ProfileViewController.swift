@@ -32,6 +32,18 @@ class ProfileViewController: UITableViewController {
     case saveBMI
   }
   
+  private enum ProfileDataError: Error {
+    
+    case missingBodyMassIndex
+    
+    var localizedDescription: String {
+      switch self {
+      case .missingBodyMassIndex:
+        return "Unable to calculate body mass index with available profile data."
+      }
+    }
+  }
+  
   @IBOutlet private var ageLabel:UILabel!
   @IBOutlet private var bloodTypeLabel:UILabel!
   @IBOutlet private var biologicalSexLabel:UILabel!
@@ -42,19 +54,18 @@ class ProfileViewController: UITableViewController {
   private let userHealthProfile = UserHealthProfile()
   
   func updateHealthInfo() {
-    readProfileInfoFromHealthKit()
-    updateWeight()
-    updateHeight()
+    loadAndDisplayAgeSexAndBloodType()
+    loadAndDisplayMostRecentWeight()
+    loadAndDisplayMostRecentHeight()
   }
   
-  func readProfileInfoFromHealthKit() {
+  func loadAndDisplayAgeSexAndBloodType() {
     
     do {
       let userAgeSexAndBloodType = try ProfileDataStore.getAgeSexAndBloodType()
       userHealthProfile.age = userAgeSexAndBloodType.age
       userHealthProfile.biologicalSex = userAgeSexAndBloodType.biologicalSex
       userHealthProfile.bloodType = userAgeSexAndBloodType.bloodType
-      
       updateLabels()
     } catch let error {
       self.displayAlert(for: error)
@@ -93,7 +104,7 @@ class ProfileViewController: UITableViewController {
     
   }
   
-  func updateHeight() {
+  func loadAndDisplayMostRecentHeight() {
     
     guard let heightSampleType = HKSampleType.quantityType(forIdentifier: .height) else {
       print("Height Sample Type is no longer available in HealthKit")
@@ -119,7 +130,7 @@ class ProfileViewController: UITableViewController {
     
   }
   
-  func updateWeight() {
+  func loadAndDisplayMostRecentWeight() {
 
     guard let weightSampleType = HKSampleType.quantityType(forIdentifier: .bodyMass) else {
       print("Body Mass Sample Type is no longer available in HealthKit")
@@ -145,13 +156,15 @@ class ProfileViewController: UITableViewController {
     
   }
   
-  func saveBMI() {
+  func saveBodyMassIndexToHealthKit() {
     
     guard let bodyMassIndex = userHealthProfile.bodyMassIndex else {
+      displayAlert(for: ProfileDataError.missingBodyMassIndex)
       return
     }
     
-    ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex, date: Date())
+    ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex,
+                                             date: Date())
   }
   
   //MARK:  UITableView Delegate
@@ -163,7 +176,7 @@ class ProfileViewController: UITableViewController {
     
     switch section {
     case .saveBMI:
-      saveBMI()
+      saveBodyMassIndexToHealthKit()
     case .readHealthKitData:
       updateHealthInfo()
     default: break
