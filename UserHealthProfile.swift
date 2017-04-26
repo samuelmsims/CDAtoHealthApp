@@ -10,17 +10,11 @@ import HealthKit
 
 final class UserHealthProfile {
   
-  var age: Int
-  var biologicalSex: HKBiologicalSex
-  var bloodType: HKBloodType
+  var age: Int?
+  var biologicalSex: HKBiologicalSex?
+  var bloodType: HKBloodType?
   var heightInMeters: Double?
   var weightInKilograms: Double?
-  
-  init(age: Int, biologicalSex: HKBiologicalSex, bloodType: HKBloodType){
-    self.age = age
-    self.biologicalSex = biologicalSex
-    self.bloodType = bloodType
-  }
   
   var bodyMassIndex: Double? {
     

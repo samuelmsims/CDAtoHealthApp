@@ -605,7 +605,7 @@
                         <outlet property="ageLabel" destination="GGi-WG-2pc" id="0FS-pR-es3"/>
                         <outlet property="biologicalSexLabel" destination="RXG-jL-pfs" id="nwx-fw-Ohn"/>
                         <outlet property="bloodTypeLabel" destination="Iic-Va-VkL" id="QsS-OT-hJb"/>
-                        <outlet property="bmiLabel" destination="4oD-JH-oDZ" id="kiG-eD-L6t"/>
+                        <outlet property="bodyMassIndexLabel" destination="4oD-JH-oDZ" id="RWO-7G-zeq"/>
                         <outlet property="heightLabel" destination="AP4-jD-IvM" id="Itl-Fa-MON"/>
                         <outlet property="weightLabel" destination="DA6-m6-IJH" id="0ym-pp-CCP"/>
                     </connections>

@@ -10,7 +10,7 @@ import HealthKit
 
 class ProfileDataStore {
 
-  class func  getUserHealthProfile() throws -> UserHealthProfile {
+  class func  getAgeSexAndBloodType() throws -> (age: Int, biologicalSex: HKBiologicalSex, bloodType: HKBloodType) {
     
     let healthKitStore = HKHealthStore()
     
@@ -26,9 +26,10 @@ class ProfileDataStore {
       let thisYear = todayDateComponents.year!
       let age = thisYear - birthdayComponents.year!
       
-      return UserHealthProfile(age: age,
-                               biologicalSex: biologicalSex.biologicalSex,
-                               bloodType: bloodType.bloodType)
+      let unwrappedBiologicalSex = biologicalSex.biologicalSex
+      let unwrappedBloodType = bloodType.bloodType
+      
+      return (age, unwrappedBiologicalSex, unwrappedBloodType)
     }
   }
   

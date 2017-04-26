@@ -37,9 +37,9 @@ class ProfileViewController: UITableViewController {
   @IBOutlet private var biologicalSexLabel:UILabel!
   @IBOutlet private var weightLabel:UILabel!
   @IBOutlet private var heightLabel:UILabel!
-  @IBOutlet private var bmiLabel:UILabel!
+  @IBOutlet private var bodyMassIndexLabel:UILabel!
   
-  private var userHealthProfile: UserHealthProfile?
+  private let userHealthProfile = UserHealthProfile()
   
   func updateHealthInfo() {
     
@@ -52,7 +52,11 @@ class ProfileViewController: UITableViewController {
   func readProfileInfoFromHealthKit() {
     
     do {
-      userHealthProfile = try ProfileDataStore.getUserHealthProfile()
+      let userAgeSexAndBloodType = try ProfileDataStore.getAgeSexAndBloodType()
+      userHealthProfile.age = userAgeSexAndBloodType.age
+      userHealthProfile.biologicalSex = userAgeSexAndBloodType.biologicalSex
+      userHealthProfile.bloodType = userAgeSexAndBloodType.bloodType
+      
       updateLabels()
     } catch let error {
       self.displayAlert(for: error)
@@ -61,13 +65,17 @@ class ProfileViewController: UITableViewController {
   
   private func updateLabels() {
     
-    guard let userHealthProfile = userHealthProfile else {
-      return
+    if let age = userHealthProfile.age {
+      ageLabel.text = "\(age)"
     }
-    
-    ageLabel.text = "\(userHealthProfile.age)"
-    biologicalSexLabel.text = userHealthProfile.biologicalSex.stringRepresentation
-    bloodTypeLabel.text = userHealthProfile.bloodType.stringRepresentation
+
+    if let biologicalSex = userHealthProfile.biologicalSex {
+      biologicalSexLabel.text = biologicalSex.stringRepresentation
+    }
+
+    if let bloodType = userHealthProfile.bloodType {
+      bloodTypeLabel.text = bloodType.stringRepresentation
+    }
     
     if let weight = userHealthProfile.weightInKilograms {
       let weightFormatter = MassFormatter()
@@ -82,7 +90,7 @@ class ProfileViewController: UITableViewController {
     }
    
     if let bodyMassIndex = userHealthProfile.bodyMassIndex {
-      bmiLabel.text = String(format: "%.02f", bodyMassIndex)
+      bodyMassIndexLabel.text = String(format: "%.02f", bodyMassIndex)
     }
     
   }
@@ -107,7 +115,7 @@ class ProfileViewController: UITableViewController {
       }
       
       let heightInMeters = height.quantity.doubleValue(for: HKUnit.meter())
-      self.userHealthProfile?.heightInMeters = heightInMeters
+      self.userHealthProfile.heightInMeters = heightInMeters
       self.updateLabels()
     }
     
@@ -133,7 +141,7 @@ class ProfileViewController: UITableViewController {
       }
       
       let weightInKilograms = weight.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
-      self.userHealthProfile?.weightInKilograms = weightInKilograms
+      self.userHealthProfile.weightInKilograms = weightInKilograms
       self.updateLabels()
     }
     
@@ -141,9 +149,8 @@ class ProfileViewController: UITableViewController {
   
   func saveBMI() {
     
-    guard let userHealthProfile = userHealthProfile,
-          let bodyMassIndex = userHealthProfile.bodyMassIndex else {
-          return
+    guard let bodyMassIndex = userHealthProfile.bodyMassIndex else {
+      return
     }
     
     ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex, date: Date())
