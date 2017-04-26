@@ -90,6 +90,10 @@ class ProfileViewController: UITableViewController {
       heightFormatter.isForPersonHeightUse = true
       heightLabel.text = heightFormatter.string(fromMeters: height)
     }
+   
+    if let bodyMassIndex = userHealthProfile.bodyMassIndex {
+      bmiLabel.text = String(format: "%.02f", bodyMassIndex)
+    }
     
   }
   
@@ -145,12 +149,14 @@ class ProfileViewController: UITableViewController {
     
   }
   
-  func updateBMI() {
-    print("TODO: update BMI")
-  }
-  
   func saveBMI() {
-    print("TODO: save BMI sample")
+    
+    guard let userHealthProfile = userHealthProfile,
+          let bodyMassIndex = userHealthProfile.bodyMassIndex else {
+          return
+    }
+    
+    ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex, date: Date())
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

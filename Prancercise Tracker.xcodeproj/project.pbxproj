@@ -25,6 +25,7 @@
 		AC8EAC051EAEA8DA002DD041 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAC031EAEA8DA002DD041 /* DatePickerCell.swift */; };
 		AC8EAC061EAEA8DA002DD041 /* NumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAC041EAEA8DA002DD041 /* NumberCell.swift */; };
 		AC8EAC081EAEA8E5002DD041 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAC071EAEA8E5002DD041 /* Workout.swift */; };
+		ACF4F91E1EB0EF310031154C /* UserHealthProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF4F91D1EB0EF310031154C /* UserHealthProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		AC8EAC031EAEA8DA002DD041 /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerCell.swift; path = "Prancercise Tracker/DatePickerCell.swift"; sourceTree = SOURCE_ROOT; };
 		AC8EAC041EAEA8DA002DD041 /* NumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumberCell.swift; path = "Prancercise Tracker/NumberCell.swift"; sourceTree = SOURCE_ROOT; };
 		AC8EAC071EAEA8E5002DD041 /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Workout.swift; path = "Prancercise Tracker/Workout.swift"; sourceTree = SOURCE_ROOT; };
+		ACF4F91D1EB0EF310031154C /* UserHealthProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHealthProfile.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				AC8EAC071EAEA8E5002DD041 /* Workout.swift */,
+				ACF4F91D1EB0EF310031154C /* UserHealthProfile.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACF4F91E1EB0EF310031154C /* UserHealthProfile.swift in Sources */,
 				AC8EABFA1EAEA895002DD041 /* HKBloodType+StringRepresentation.swift in Sources */,
 				AC8EABF61EAEA875002DD041 /* BMICalculator.swift in Sources */,
 				AC8EABF01EAEA855002DD041 /* WorkoutsTableViewController.swift in Sources */,

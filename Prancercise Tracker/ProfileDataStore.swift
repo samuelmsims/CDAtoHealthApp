@@ -8,22 +8,6 @@
 
 import HealthKit
 
-final class UserHealthProfile {
-  
-  var age: Int
-  var biologicalSex: HKBiologicalSex
-  var bloodType: HKBloodType
-  var heightInMeters: Double?
-  var weightInKilograms: Double?
-  
-  init(age: Int, biologicalSex: HKBiologicalSex, bloodType: HKBloodType){
-    self.age = age
-    self.biologicalSex = biologicalSex
-    self.bloodType = bloodType
-  }
-  
-}
-
 class ProfileDataStore {
 
   class func  getUserHealthProfile() throws -> UserHealthProfile {
@@ -82,6 +66,30 @@ class ProfileDataStore {
     }
     
     HKHealthStore().execute(sampleQuery)
+  }
+  
+  class func saveBodyMassIndexSample(bodyMassIndex: Double, date: Date) {
+    
+    guard let bodyMassIndexType = HKQuantityType.quantityType(forIdentifier: .bodyMassIndex) else {
+      fatalError("Body Mass Index Type is no longer available in HealthKit")
+    }
+    
+    let bodyMassQuantity = HKQuantity(unit: HKUnit.count(), doubleValue: bodyMassIndex)
+    
+    let bodyMassIndexSample = HKQuantitySample(type: bodyMassIndexType,
+                                               quantity: bodyMassQuantity,
+                                               start: date,
+                                               end: date)
+    
+    HKHealthStore().save(bodyMassIndexSample) { (success, error) in
+      
+      if let error = error {
+        print("Error Saving BMI Sample: \(error.localizedDescription)")
+      } else {
+        print("Successfully save BMI Sample")
+      }
+      
+    }
   }
   
 }
