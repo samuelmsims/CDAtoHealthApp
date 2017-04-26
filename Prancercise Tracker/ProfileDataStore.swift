@@ -8,10 +8,20 @@
 
 import HealthKit
 
-struct UserHealthProfile {
+final class UserHealthProfile {
+  
   var age: Int
   var biologicalSex: HKBiologicalSex
   var bloodType: HKBloodType
+  var heightInMeters: Double?
+  var weightInKilograms: Double?
+  
+  init(age: Int, biologicalSex: HKBiologicalSex, bloodType: HKBloodType){
+    self.age = age
+    self.biologicalSex = biologicalSex
+    self.bloodType = bloodType
+  }
+  
 }
 
 class ProfileDataStore {
@@ -37,5 +47,42 @@ class ProfileDataStore {
                                bloodType: bloodType.bloodType)
     }
   }
+  
+  class func getMostRecent(SampleType sampleType: HKSampleType,
+                           completion: @escaping (HKSample?, Error?) -> Swift.Void) {
+    
+    let mostRecentPredicate = HKQuery.predicateForSamples(withStart: Date(),
+                                                          end: Date.distantPast,
+                                                          options: .strictEndDate)
+    
+    let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate,
+                                          ascending: false)
+    
+    let limit = 1
+    
+    let sampleQuery = HKSampleQuery(sampleType: sampleType,
+                                    predicate: mostRecentPredicate,
+                                    limit: limit,
+                                    sortDescriptors: [sortDescriptor]) { (query, samples, error) in
+    
+      DispatchQueue.main.async {
+        guard let samples = samples,
+          let mostRecentSample = samples.first as? HKQuantitySample else {
+            
+            if let error = error {
+              completion(nil, error)
+              return
+            }
+            
+            completion(nil, nil)
+            return
+        }
+        completion(mostRecentSample, nil)
+      }
+    }
+    
+    HKHealthStore().execute(sampleQuery)
+  }
+  
 }
 
