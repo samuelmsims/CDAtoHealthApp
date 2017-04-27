@@ -115,5 +115,4 @@ class DatePickerCell: UITableViewCell {
       return datePicker
     }
   }
-  
 }

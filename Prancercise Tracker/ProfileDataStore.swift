@@ -104,9 +104,7 @@ class ProfileDataStore {
       } else {
         print("Successfully save BMI Sample")
       }
-      
     }
   }
-  
 }
 

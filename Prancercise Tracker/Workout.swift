@@ -35,7 +35,6 @@ struct Workout {
       return start.addingTimeInterval(durationInMinutes*secondsInAMinute)
     }
   }
-  
 }
 
 class WorkoutBuilder {
@@ -71,6 +70,5 @@ class WorkoutBuilder {
                    distance: distance,
                    energyBurned: energyBurned)
   }
-  
 }
 

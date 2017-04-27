@@ -44,7 +44,6 @@ class MasterViewController: UITableViewController {
       
       print("HealthKit Was Authorized")
     }
-    
   }
   
   // MARK: - UITableView Delegate
@@ -53,7 +52,5 @@ class MasterViewController: UITableViewController {
     if indexPath.section == authorizeHealthKitSection {
       authorizeHealthKit()
     }
-    
   }
-  
 }

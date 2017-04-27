@@ -101,7 +101,6 @@ class ProfileViewController: UITableViewController {
     if let bodyMassIndex = userHealthProfile.bodyMassIndex {
       bodyMassIndexLabel.text = String(format: "%.02f", bodyMassIndex)
     }
-    
   }
   
   private func loadAndDisplayMostRecentHeight() {
@@ -127,7 +126,6 @@ class ProfileViewController: UITableViewController {
       self.userHealthProfile.heightInMeters = heightInMeters
       self.updateLabels()
     }
-    
   }
   
   private func loadAndDisplayMostRecentWeight() {
@@ -153,7 +151,6 @@ class ProfileViewController: UITableViewController {
       self.userHealthProfile.weightInKilograms = weightInKilograms
       self.updateLabels()
     }
-    
   }
   
   private func saveBodyMassIndexToHealthKit() {
@@ -194,7 +191,5 @@ class ProfileViewController: UITableViewController {
       updateHealthInfo()
     default: break
     }
-    
   }
-  
 }
