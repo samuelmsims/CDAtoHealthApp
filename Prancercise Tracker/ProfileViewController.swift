@@ -53,13 +53,13 @@ class ProfileViewController: UITableViewController {
   
   private let userHealthProfile = UserHealthProfile()
   
-  func updateHealthInfo() {
+  private func updateHealthInfo() {
     loadAndDisplayAgeSexAndBloodType()
     loadAndDisplayMostRecentWeight()
     loadAndDisplayMostRecentHeight()
   }
   
-  func loadAndDisplayAgeSexAndBloodType() {
+  private func loadAndDisplayAgeSexAndBloodType() {
     
     do {
       let userAgeSexAndBloodType = try ProfileDataStore.getAgeSexAndBloodType()
@@ -104,7 +104,7 @@ class ProfileViewController: UITableViewController {
     
   }
   
-  func loadAndDisplayMostRecentHeight() {
+  private func loadAndDisplayMostRecentHeight() {
     
     guard let heightSampleType = HKSampleType.quantityType(forIdentifier: .height) else {
       print("Height Sample Type is no longer available in HealthKit")
@@ -130,7 +130,7 @@ class ProfileViewController: UITableViewController {
     
   }
   
-  func loadAndDisplayMostRecentWeight() {
+  private func loadAndDisplayMostRecentWeight() {
 
     guard let weightSampleType = HKSampleType.quantityType(forIdentifier: .bodyMass) else {
       print("Body Mass Sample Type is no longer available in HealthKit")
@@ -156,7 +156,7 @@ class ProfileViewController: UITableViewController {
     
   }
   
-  func saveBodyMassIndexToHealthKit() {
+  private func saveBodyMassIndexToHealthKit() {
     
     guard let bodyMassIndex = userHealthProfile.bodyMassIndex else {
       displayAlert(for: ProfileDataError.missingBodyMassIndex)
