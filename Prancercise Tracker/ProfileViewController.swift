@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 import UIKit
 import HealthKit
 
@@ -166,6 +167,19 @@ class ProfileViewController: UITableViewController {
                                              date: Date())
   }
   
+  private func displayAlert(for error: Error) {
+    
+    let alert = UIAlertController(title: nil,
+                                  message: error.localizedDescription,
+                                  preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "O.K.",
+                                  style: .default,
+                                  handler: nil))
+    
+    present(alert, animated: true, completion: nil)
+  }
+  
   //MARK:  UITableView Delegate
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
@@ -181,19 +195,6 @@ class ProfileViewController: UITableViewController {
     default: break
     }
     
-  }
-  
-  private func displayAlert(for error: Error) {
-    
-    let alert = UIAlertController(title: nil,
-                                  message: error.localizedDescription,
-                                  preferredStyle: .alert)
-    
-    alert.addAction(UIAlertAction(title: "O.K.",
-                                  style: .default,
-                                  handler: nil))
-    
-    present(alert, animated: true, completion: nil)
   }
   
 }

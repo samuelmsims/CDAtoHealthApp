@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 import HealthKit
 
 class HealthKitSetupAssistant {
@@ -61,6 +62,7 @@ class HealthKitSetupAssistant {
                                                    height,
                                                    HKObjectType.workoutType()]
 
+    //4. Request Authorization
     let healthKitStore = HKHealthStore()
 
     healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite,
