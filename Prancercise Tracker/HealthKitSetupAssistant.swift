@@ -29,7 +29,7 @@ class HealthKitSetupAssistant {
     case dataTypeNotAvailable
   }
   
-  class func authorizHealthKit(completion: @escaping (Bool, Error?) -> Swift.Void) {
+  class func authorizeHealthKit(completion: @escaping (Bool, Error?) -> Swift.Void) {
     
     //1. Check to see if HealthKit Is Available on this device
     guard HKHealthStore.isHealthDataAvailable() else {

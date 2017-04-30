@@ -29,7 +29,7 @@ class MasterViewController: UITableViewController {
   
   private func authorizeHealthKit() {
     
-    HealthKitSetupAssistant.authorizHealthKit { (authorized, error) in
+    HealthKitSetupAssistant.authorizeHealthKit { (authorized, error) in
       
       guard authorized else {
         
