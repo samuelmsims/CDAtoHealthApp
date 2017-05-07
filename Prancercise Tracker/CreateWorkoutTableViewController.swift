@@ -27,116 +27,186 @@
      * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
      * THE SOFTWARE.
      */
-
-import UIKit
-
-class CreateWorkoutTableViewController: UITableViewController {
-  
-  @IBOutlet private var workoutDateCell: DatePickerCell!
-  @IBOutlet private var workoutStartTimeCell: DatePickerCell!
-  
-  @IBOutlet fileprivate var workoutDurationCell: NumberCell!
-  @IBOutlet fileprivate var workoutCaloriesCell: NumberCell!
-  @IBOutlet fileprivate var workoutDistanceCell: NumberCell!
-
-  private var workout: Workout?
-  
-  fileprivate var selectedWorkoutDate: Date?
-  fileprivate var selectedWorkoutStartTime: Date?
-  fileprivate var selectedWorkoutDurationInMinutes: Double?
-  fileprivate var selectedWorkoutDistance: Double?
-  fileprivate var selectedEnergyBurned: Double?
-  
-  var distanceUnit = DistanceUnit.miles
-  
-  fileprivate func updateOKButtonStatus() {
-    navigationItem.rightBarButtonItem?.isEnabled = workout == nil ? false:true
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    setupCells()
-  }
-  
-  private func setupCells() {
     
-    workoutDateCell.inputMode = .date
-    workoutStartTimeCell.inputMode = .time
+    import UIKit
     
-    workoutDateCell.delegate = self
-    workoutStartTimeCell.delegate = self
-    
-    workoutDurationCell.delegate = self
-    workoutCaloriesCell.delegate = self
-    workoutDistanceCell.delegate = self
-    
-    let formatter = LengthFormatter()
-    formatter.unitStyle = .long
-    let unit = distanceUnit == DistanceUnit.kilometers ? LengthFormatter.Unit.kilometer : LengthFormatter.Unit.mile
-    let unitString = formatter.unitString(fromValue: 2.0, unit: unit)
-    workoutDistanceCell.textLabel?.text = "Distance (" + unitString.capitalized + ")"
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    updateOKButtonStatus()
-  }
-  
-  fileprivate func updateWorkout() {
-    
-    var startHourAndMinute: DateComponents?
-    
-    if let selectedWorkoutStartTime = selectedWorkoutStartTime {
-      startHourAndMinute = Calendar
-        .current
-        .dateComponents([.hour, .minute],
-                        from: selectedWorkoutStartTime)
+    class CreateWorkoutTableViewController: UITableViewController {
+      
+      @IBOutlet private var startTimeLabel: UILabel!
+      @IBOutlet private var durationLabel: UILabel!
+      
+      private var timer:Timer!
+      
+      override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1,
+                                     repeats: true,
+                                     block: { (timer) in
+                                      self.updateLabels()
+        })
+      }
+      
+      private func updateOKButtonStatus() {
+        
+        var isEnabled = false
+        
+        switch WorkoutSession.current.state {
+          
+        case .notStarted, .active:
+          isEnabled = false
+          
+        case .finished:
+          isEnabled = true
+          
+        }
+        
+        navigationItem.rightBarButtonItem?.isEnabled = isEnabled
+      }
+      
+      override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateOKButtonStatus()
+      }
+      
+      private lazy var startTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+      }()
+      
+      private lazy var durationFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = [.pad]
+        return formatter
+      }()
+      
+      func updateLabels() {
+        
+        let session = WorkoutSession.current
+        
+        switch session.state {
+          
+        case .active:
+          startTimeLabel.text = startTimeFormatter.string(from: session.startDate)
+          let duration = Date().timeIntervalSince(session.startDate)
+          durationLabel.text = durationFormatter.string(from: duration)
+          
+        case .finished:
+          startTimeLabel.text = startTimeFormatter.string(from: session.startDate)
+          let duration = session.endDate.timeIntervalSince(session.startDate)
+          durationLabel.text = durationFormatter.string(from: duration)
+          
+          
+        default:
+          startTimeLabel.text = nil
+          durationLabel.text = nil
+          
+        }
+        
+      }
+      
+      //MARK: UITableView Datasource
+      override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        switch WorkoutSession.current.state {
+          
+        case .active, .finished:
+          return 2
+          
+        case .notStarted:
+          return 0
+          
+        }
+        
+      }
+      
+      //MARK: UITableView Delegate
+      override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        var buttonTitle: String!
+        var buttonColor: UIColor!
+        
+        switch WorkoutSession.current.state {
+          
+        case .active:
+          buttonTitle = "STOP PRANCERCISING"
+          buttonColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+          
+        case .notStarted:
+          buttonTitle = "START PRANCERCISING!"
+          buttonColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+          
+        case .finished:
+          buttonTitle = "NEW PRANCERCISE"
+          buttonColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+          
+        }
+        
+        let buttonFrame = CGRect(x: 0, y: 0,
+                                 width: tableView.frame.size.width,
+                                 height: 44.0)
+        
+        let button = UIButton(frame: buttonFrame)
+        button.setTitle(buttonTitle, for: .normal)
+        button.addTarget(self,
+                         action: #selector(startStopButtonPressed),
+                         for: UIControlEvents.touchUpInside)
+        button.backgroundColor = buttonColor
+        return button
+      }
+      
+      override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 44.0
+      }
+      
+      func beginWorkout() {
+        WorkoutSession.current.start()
+        updateLabels()
+        tableView.reloadData()
+      }
+      
+      func finishWorkout() {
+        WorkoutSession.current.end()
+        updateLabels()
+        updateOKButtonStatus()
+        tableView.reloadData()
+      }
+      
+      func startStopButtonPressed() {
+        
+        switch WorkoutSession.current.state {
+          
+        case .notStarted, .finished:
+          displayStartPrancerciseAlert()
+          
+        case .active:
+          finishWorkout()
+        }
+        
+      }
+      
+      private func displayStartPrancerciseAlert() {
+        
+        let alert = UIAlertController(title: nil,
+                                      message: "Start a Prancercise routine? (Get those ankle weights ready)",
+                                      preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Yes",
+                                      style: .default) { (action) in
+                                        self.beginWorkout()
+        }
+        
+        let noAction = UIAlertAction(title: "No",
+                                     style: .cancel,
+                                     handler: nil)
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        present(alert, animated: true, completion: nil)
+      }
+      
     }
-    
-    workout = WorkoutBuilder.makeWorkout(dateWorkoutOccurs: selectedWorkoutDate,
-                                         startHourAndMinute: startHourAndMinute,
-                                         durationInMinutes: selectedWorkoutDurationInMinutes,
-                                         distance: selectedWorkoutDistance,
-                                         energyBurned: selectedEnergyBurned)
-  }
-}
-
-//MARK: DatePickerCellDelegate
-extension CreateWorkoutTableViewController: DatePickerCellDelegate {
-  
-  func datePickerCell(_ cell: DatePickerCell, didSelect date: Date) {
-    
-    switch cell.inputMode {
-    case .date:
-      selectedWorkoutDate = date
-    case .time:
-      selectedWorkoutStartTime = date
-    default: break
-    }
-    
-    updateWorkout()
-    updateOKButtonStatus()
-  }
-}
-
-//MARK: NumberCellDelegate
-extension CreateWorkoutTableViewController: NumberCellDelegate {
-  
-  func numberCell(_ cell: NumberCell, valueDidChange newValue: Double) {
-    
-    if cell == workoutDurationCell {
-      selectedWorkoutDurationInMinutes = newValue
-    }
-    
-    else if cell == workoutCaloriesCell {
-      selectedEnergyBurned = newValue
-    }
-    
-    else if cell == workoutDistanceCell {
-      selectedWorkoutDistance = newValue
-    }
-    
-    updateWorkout()
-    updateOKButtonStatus()
-  }
-}

@@ -28,28 +28,48 @@
      * THE SOFTWARE.
      */
 
-import UIKit
-
-protocol NumberCellDelegate: class {
-  func numberCell(_ cell: NumberCell, valueDidChange newValue: Double)
-}
-
-class NumberCell: UITableViewCell {
-  
-  @IBOutlet private var numberTextField:UITextField!
-  
-  weak var delegate: NumberCellDelegate?
-}
-
-extension NumberCell: UITextFieldDelegate {
-  
-  func textFieldDidEndEditing(_ textField: UITextField) {
+import Foundation
     
-    guard   let text = textField.text,
-            let newValue = Double(text) else{
-            return
-    }
-    
-    delegate?.numberCell(self, valueDidChange: newValue)
+  enum WorkoutSessionState {
+    case notStarted
+    case active
+    case finished
   }
+    
+  class WorkoutSession {
+      
+  static let current = WorkoutSession()
+      
+  private (set) var startDate: Date!
+  private (set) var endDate: Date!
+      
+  var state: WorkoutSessionState = .notStarted
+      
+  func start() {
+    startDate = Date()
+    state = .active
+  }
+      
+  func end() {
+    endDate = Date()
+    state = .finished
+  }
+      
+  var completeWorkout: PrancerciseWorkout? {
+        
+      get {
+          
+        guard state == .finished,
+              let startDate = startDate,
+              let endDate = endDate else {
+              return nil
+      }
+          
+      return PrancerciseWorkout(start: startDate,
+                                    end: endDate)
+          
+    }
+        
+  }
+      
 }

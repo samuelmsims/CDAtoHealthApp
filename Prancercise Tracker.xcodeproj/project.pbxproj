@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC5F98D91EBEBFC600CA4444 /* WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5F98D81EBEBFC600CA4444 /* WorkoutSession.swift */; };
 		AC732B6A1EAEABEF0062303D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC732B691EAEABEF0062303D /* HealthKit.framework */; };
 		AC8EABE61EAEA833002DD041 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC8EABE51EAEA833002DD041 /* Assets.xcassets */; };
 		AC8EABE81EAEA83F002DD041 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EABE71EAEA83F002DD041 /* AppDelegate.swift */; };
@@ -20,8 +21,6 @@
 		AC8EABFA1EAEA895002DD041 /* HKBloodType+StringRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EABF81EAEA895002DD041 /* HKBloodType+StringRepresentation.swift */; };
 		AC8EABFD1EAEA8B2002DD041 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC8EABFB1EAEA8B2002DD041 /* Main.storyboard */; };
 		AC8EAC021EAEA8C8002DD041 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC8EAC011EAEA8C8002DD041 /* Info.plist */; };
-		AC8EAC051EAEA8DA002DD041 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAC031EAEA8DA002DD041 /* DatePickerCell.swift */; };
-		AC8EAC061EAEA8DA002DD041 /* NumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAC041EAEA8DA002DD041 /* NumberCell.swift */; };
 		AC8EAC081EAEA8E5002DD041 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EAC071EAEA8E5002DD041 /* Workout.swift */; };
 		ACF4F91E1EB0EF310031154C /* UserHealthProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF4F91D1EB0EF310031154C /* UserHealthProfile.swift */; };
 		ACF4F9231EB214C00031154C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACF4F9211EB214C00031154C /* LaunchScreen.xib */; };
@@ -29,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		AC1BA50C1EAE5D2F00C99FE3 /* Prancercise Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Prancercise Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC5F98D81EBEBFC600CA4444 /* WorkoutSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSession.swift; sourceTree = SOURCE_ROOT; };
 		AC732B651EAEAB940062303D /* Prancercise Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Prancercise Tracker.entitlements"; path = "Prancercise Tracker/Prancercise Tracker.entitlements"; sourceTree = SOURCE_ROOT; };
 		AC732B691EAEABEF0062303D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		AC8EABE51EAEA833002DD041 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Prancercise Tracker/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
@@ -43,8 +43,6 @@
 		AC8EABF81EAEA895002DD041 /* HKBloodType+StringRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HKBloodType+StringRepresentation.swift"; path = "Prancercise Tracker/HKBloodType+StringRepresentation.swift"; sourceTree = SOURCE_ROOT; };
 		AC8EABFC1EAEA8B2002DD041 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Prancercise Tracker/Base.lproj/Main.storyboard"; sourceTree = SOURCE_ROOT; };
 		AC8EAC011EAEA8C8002DD041 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Prancercise Tracker/Info.plist"; sourceTree = SOURCE_ROOT; };
-		AC8EAC031EAEA8DA002DD041 /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerCell.swift; path = "Prancercise Tracker/DatePickerCell.swift"; sourceTree = SOURCE_ROOT; };
-		AC8EAC041EAEA8DA002DD041 /* NumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumberCell.swift; path = "Prancercise Tracker/NumberCell.swift"; sourceTree = SOURCE_ROOT; };
 		AC8EAC071EAEA8E5002DD041 /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Workout.swift; path = "Prancercise Tracker/Workout.swift"; sourceTree = SOURCE_ROOT; };
 		ACF4F91D1EB0EF310031154C /* UserHealthProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHealthProfile.swift; sourceTree = SOURCE_ROOT; };
 		ACF4F9221EB214C00031154C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Prancercise Tracker/Base.lproj/LaunchScreen.xib"; sourceTree = SOURCE_ROOT; };
@@ -84,7 +82,6 @@
 			children = (
 				AC732B651EAEAB940062303D /* Prancercise Tracker.entitlements */,
 				AC1BA52F1EAE5E5400C99FE3 /* View Controllers */,
-				AC1BA5321EAE5EA600C99FE3 /* Cells */,
 				AC8EABDB1EAE88DB002DD041 /* Models */,
 				AC8EABE71EAEA83F002DD041 /* AppDelegate.swift */,
 				AC8EABF11EAEA860002DD041 /* HealthKitSetupAssistant.swift */,
@@ -110,15 +107,6 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		AC1BA5321EAE5EA600C99FE3 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				AC8EAC031EAEA8DA002DD041 /* DatePickerCell.swift */,
-				AC8EAC041EAEA8DA002DD041 /* NumberCell.swift */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
 		AC732B661EAEAB940062303D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				AC8EAC071EAEA8E5002DD041 /* Workout.swift */,
+				AC5F98D81EBEBFC600CA4444 /* WorkoutSession.swift */,
 				ACF4F91D1EB0EF310031154C /* UserHealthProfile.swift */,
 			);
 			name = Models;
@@ -235,8 +224,7 @@
 				AC8EABEF1EAEA855002DD041 /* ProfileViewController.swift in Sources */,
 				AC8EAC081EAEA8E5002DD041 /* Workout.swift in Sources */,
 				AC8EABF91EAEA895002DD041 /* HKBiologicalSex+StringRepresentation.swift in Sources */,
-				AC8EAC051EAEA8DA002DD041 /* DatePickerCell.swift in Sources */,
-				AC8EAC061EAEA8DA002DD041 /* NumberCell.swift in Sources */,
+				AC5F98D91EBEBFC600CA4444 /* WorkoutSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
