@@ -72,17 +72,9 @@ class HealthKitSetupAssistant {
                                                    HKObjectType.workoutType()]
 
     //4. Request Authorization
-    let healthKitStore = HKHealthStore()
-
-    healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite,
-                                        read: healthKitTypesToRead) { (success, error) in
-      
-      guard success else {
-        completion(false, error)
-          return
-      }
-                                          
-      completion(true, nil)
+    HKHealthStore().requestAuthorization(toShare: healthKitTypesToWrite,
+                                         read: healthKitTypesToRead) { (success, error) in
+      completion(success, error)
     }
   }
 }
