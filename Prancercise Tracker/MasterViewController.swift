@@ -29,7 +29,6 @@
  */
 
 import UIKit
-import HealthKit
 
 class MasterViewController: UITableViewController {
   
