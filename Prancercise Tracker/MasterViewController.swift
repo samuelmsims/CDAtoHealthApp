@@ -40,18 +40,13 @@ class MasterViewController: UITableViewController {
     HealthKitSetupAssistant.authorizeHealthKit { (authorized, error) in
       
       guard authorized else {
-        
-        print("HealthKit Was Not Authorized")
-        
-        if let error = error {
-          print(error)
-        }
-        
+        self.displayAuthorizationErrorAlert(with: error)
         return
       }
       
-      print("HealthKit Was Authorized")
+      self.displayAuthorizedAlert()
     }
+    
   }
   
   // MARK: - UITableView Delegate
@@ -60,5 +55,41 @@ class MasterViewController: UITableViewController {
     if indexPath.section == authorizeHealthKitSection {
       authorizeHealthKit()
     }
+  }
+  
+  private func displayAuthorizedAlert() {
+    
+    let alert = UIAlertController(title: nil,
+                                  message: "HealthKit Authorized. Get your Prancercise on!",
+                                  preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "O.K.",
+                                  style: .default,
+                                  handler: nil))
+    
+    present(alert, animated: true, completion: nil)
+  }
+  
+  private func displayAuthorizationErrorAlert(with error: Error?) {
+    
+    let baseText = "HealthKit authorized failed"
+    
+    var message = String()
+    
+    if let error = error {
+      message = "\(baseText). Reason: \(error.localizedDescription)"
+    } else {
+      message = baseText
+    }
+    
+    let alert = UIAlertController(title: nil,
+                                  message: message,
+                                  preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "O.K.",
+                                  style: .default,
+                                  handler: nil))
+    
+    present(alert, animated: true, completion: nil)
   }
 }
