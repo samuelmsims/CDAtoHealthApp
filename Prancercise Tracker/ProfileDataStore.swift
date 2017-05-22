@@ -78,12 +78,8 @@ class ProfileDataStore {
         
         guard let samples = samples,
               let mostRecentSample = samples.first as? HKQuantitySample else {
-            
-              if let error = error {
-                completion(nil, error)
-              }
-            
-              completion(nil, nil)
+                
+              completion(nil, error)
               return
         }
         
