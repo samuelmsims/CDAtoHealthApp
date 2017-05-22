@@ -58,7 +58,7 @@ class ProfileDataStore {
   }
   
   class func getMostRecentSample(for sampleType: HKSampleType,
-                                 completion: @escaping (HKSample?, Error?) -> Swift.Void) {
+                                 completion: @escaping (HKQuantitySample?, Error?) -> Swift.Void) {
     
     let mostRecentPredicate = HKQuery.predicateForSamples(withStart: Date(),
                                                           end: Date.distantPast,

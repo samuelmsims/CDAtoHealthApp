@@ -120,8 +120,7 @@ class ProfileViewController: UITableViewController {
     
     ProfileDataStore.getMostRecentSample(for: heightSampleType) { (sample, error) in
       
-      guard let sample = sample,
-            let height = sample as? HKQuantitySample else {
+      guard let sample = sample else {
       
         if let error = error {
           self.displayAlert(for: error)
@@ -130,7 +129,7 @@ class ProfileViewController: UITableViewController {
         return
       }
       
-      let heightInMeters = height.quantity.doubleValue(for: HKUnit.meter())
+      let heightInMeters = sample.quantity.doubleValue(for: HKUnit.meter())
       self.userHealthProfile.heightInMeters = heightInMeters
       self.updateLabels()
     }
@@ -145,9 +144,7 @@ class ProfileViewController: UITableViewController {
     
     ProfileDataStore.getMostRecentSample(for: weightSampleType) { (sample, error) in
       
-      guard let sample = sample,
-            let weight = sample as? HKQuantitySample
-      else {
+      guard let sample = sample else {
         
         if let error = error {
           self.displayAlert(for: error)
@@ -155,7 +152,7 @@ class ProfileViewController: UITableViewController {
         return
       }
       
-      let weightInKilograms = weight.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
+      let weightInKilograms = sample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
       self.userHealthProfile.weightInKilograms = weightInKilograms
       self.updateLabels()
     }
