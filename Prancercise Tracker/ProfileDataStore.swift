@@ -96,7 +96,8 @@ class ProfileDataStore {
       fatalError("Body Mass Index Type is no longer available in HealthKit")
     }
     
-    let bodyMassQuantity = HKQuantity(unit: HKUnit.count(), doubleValue: bodyMassIndex)
+    let bodyMassQuantity = HKQuantity(unit: HKUnit.count(),
+                                      doubleValue: bodyMassIndex)
     
     let bodyMassIndexSample = HKQuantitySample(type: bodyMassIndexType,
                                                quantity: bodyMassQuantity,
