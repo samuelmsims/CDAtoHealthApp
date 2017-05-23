@@ -109,7 +109,7 @@ class ProfileDataStore {
       if let error = error {
         print("Error Saving BMI Sample: \(error.localizedDescription)")
       } else {
-        print("Successfully save BMI Sample")
+        print("Successfully saved BMI Sample")
       }
     }
   }
