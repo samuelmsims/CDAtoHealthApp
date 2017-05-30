@@ -31,10 +31,6 @@
 import UIKit
 import HealthKit
 
-public enum DistanceUnit:Int {
-  case miles=0, kilometers=1
-}
-
 class WorkoutsTableViewController: UITableViewController {
   
   private enum WorkoutsSegues: String {
