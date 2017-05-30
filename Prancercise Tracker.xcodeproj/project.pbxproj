@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AC5F98D91EBEBFC600CA4444 /* WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5F98D81EBEBFC600CA4444 /* WorkoutSession.swift */; };
 		AC732B6A1EAEABEF0062303D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC732B691EAEABEF0062303D /* HealthKit.framework */; };
+		AC891D711EDDBCEB00A0F84A /* WorkoutDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC891D701EDDBCEB00A0F84A /* WorkoutDataStore.swift */; };
 		AC8EABE61EAEA833002DD041 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC8EABE51EAEA833002DD041 /* Assets.xcassets */; };
 		AC8EABE81EAEA83F002DD041 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EABE71EAEA83F002DD041 /* AppDelegate.swift */; };
 		AC8EABED1EAEA855002DD041 /* CreateWorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EABE91EAEA855002DD041 /* CreateWorkoutTableViewController.swift */; };
@@ -31,6 +32,7 @@
 		AC5F98D81EBEBFC600CA4444 /* WorkoutSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSession.swift; sourceTree = SOURCE_ROOT; };
 		AC732B651EAEAB940062303D /* Prancercise Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Prancercise Tracker.entitlements"; path = "Prancercise Tracker/Prancercise Tracker.entitlements"; sourceTree = SOURCE_ROOT; };
 		AC732B691EAEABEF0062303D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		AC891D701EDDBCEB00A0F84A /* WorkoutDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutDataStore.swift; path = "Prancercise Tracker/WorkoutDataStore.swift"; sourceTree = SOURCE_ROOT; };
 		AC8EABE51EAEA833002DD041 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "Prancercise Tracker/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		AC8EABE71EAEA83F002DD041 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "Prancercise Tracker/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		AC8EABE91EAEA855002DD041 /* CreateWorkoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateWorkoutTableViewController.swift; path = "Prancercise Tracker/CreateWorkoutTableViewController.swift"; sourceTree = SOURCE_ROOT; };
@@ -86,6 +88,7 @@
 				AC8EABE71EAEA83F002DD041 /* AppDelegate.swift */,
 				AC8EABF11EAEA860002DD041 /* HealthKitSetupAssistant.swift */,
 				AC8EABF31EAEA86A002DD041 /* ProfileDataStore.swift */,
+				AC891D701EDDBCEB00A0F84A /* WorkoutDataStore.swift */,
 				AC8EABDE1EAE9B56002DD041 /* HealthKit Extensions */,
 				AC8EABE51EAEA833002DD041 /* Assets.xcassets */,
 				AC8EABFB1EAEA8B2002DD041 /* Main.storyboard */,
@@ -221,6 +224,7 @@
 				AC8EABF41EAEA86A002DD041 /* ProfileDataStore.swift in Sources */,
 				AC8EABE81EAEA83F002DD041 /* AppDelegate.swift in Sources */,
 				AC8EABEE1EAEA855002DD041 /* MasterViewController.swift in Sources */,
+				AC891D711EDDBCEB00A0F84A /* WorkoutDataStore.swift in Sources */,
 				AC8EABEF1EAEA855002DD041 /* ProfileViewController.swift in Sources */,
 				AC8EAC081EAEA8E5002DD041 /* Workout.swift in Sources */,
 				AC8EABF91EAEA895002DD041 /* HKBiologicalSex+StringRepresentation.swift in Sources */,
