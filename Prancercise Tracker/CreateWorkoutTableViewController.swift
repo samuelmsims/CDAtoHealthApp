@@ -37,6 +37,10 @@ class CreateWorkoutTableViewController: UITableViewController {
   
   private var timer:Timer!
   
+  let finishedCreatingWorkoutSegueIdentifier = "finishedCreatingWorkout"
+  
+  var session = WorkoutSession()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -51,7 +55,7 @@ class CreateWorkoutTableViewController: UITableViewController {
     
     var isEnabled = false
     
-    switch WorkoutSession.current.state {
+    switch session.state {
       
     case .notStarted, .active:
       isEnabled = false
@@ -66,6 +70,7 @@ class CreateWorkoutTableViewController: UITableViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    session.clear()
     updateOKButtonStatus()
   }
   
@@ -84,8 +89,6 @@ class CreateWorkoutTableViewController: UITableViewController {
   }()
   
   func updateLabels() {
-    
-    let session = WorkoutSession.current
     
     switch session.state {
       
@@ -111,7 +114,7 @@ class CreateWorkoutTableViewController: UITableViewController {
   //MARK: UITableView Datasource
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-    switch WorkoutSession.current.state {
+    switch session.state {
       
     case .active, .finished:
       return 2
@@ -129,7 +132,7 @@ class CreateWorkoutTableViewController: UITableViewController {
     var buttonTitle: String!
     var buttonColor: UIColor!
     
-    switch WorkoutSession.current.state {
+    switch session.state {
       
     case .active:
       buttonTitle = "STOP PRANCERCISING"
@@ -163,14 +166,14 @@ class CreateWorkoutTableViewController: UITableViewController {
   }
   
   func beginWorkout() {
-    WorkoutSession.current.start()
+    session.start()
     updateLabels()
     updateOKButtonStatus()
     tableView.reloadData()
   }
   
   func finishWorkout() {
-    WorkoutSession.current.end()
+    session.end()
     updateLabels()
     updateOKButtonStatus()
     tableView.reloadData()
@@ -178,7 +181,7 @@ class CreateWorkoutTableViewController: UITableViewController {
   
   func startStopButtonPressed() {
     
-    switch WorkoutSession.current.state {
+    switch session.state {
       
     case .notStarted, .finished:
       displayStartPrancerciseAlert()
@@ -191,12 +194,32 @@ class CreateWorkoutTableViewController: UITableViewController {
   
   @IBAction func doneButtonPressed(sender: Any) {
     
+    guard let currentWorkout = session.completeWorkout else {
+      fatalError("Shouldn't be able to press the done button without a saved workout.")
+    }
+    
+    WorkoutDataStore.save(prancerciseWorkout: currentWorkout) { (success, error) in
+      
+      if success {
+        self.dismissAndRefreshWorkouts()
+      } else {
+        self.displayProblemSavingWorkoutAlert()
+      }
+      
+    }
+    
+  }
+  
+  private func dismissAndRefreshWorkouts() {
+    session.clear()
+    performSegue(withIdentifier: finishedCreatingWorkoutSegueIdentifier,
+                 sender: self)
   }
   
   private func displayStartPrancerciseAlert() {
     
     let alert = UIAlertController(title: nil,
-                                  message: "Start a Prancercise routine? (Get those ankle weights ready)",
+                                  message: "Start a Prancercise session? (Get those ankle weights ready)",
                                   preferredStyle: .alert)
     
     let yesAction = UIAlertAction(title: "Yes",
@@ -211,6 +234,20 @@ class CreateWorkoutTableViewController: UITableViewController {
     alert.addAction(yesAction)
     alert.addAction(noAction)
     
+    present(alert, animated: true, completion: nil)
+  }
+  
+  private func displayProblemSavingWorkoutAlert() {
+    
+    let alert = UIAlertController(title: nil,
+                                  message: "There was a problem saving your workout",
+                                  preferredStyle: .alert)
+    
+    let okayAction = UIAlertAction(title: "O.K.",
+                                   style: .default,
+                                   handler: nil)
+    
+    alert.addAction(okayAction)
     present(alert, animated: true, completion: nil)
   }
   
