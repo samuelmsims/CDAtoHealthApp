@@ -113,6 +113,7 @@ class ProfileViewController: UITableViewController {
   
   private func loadAndDisplayMostRecentHeight() {
     
+    //1. Use HealthKit to create the Height Sample Type
     guard let heightSampleType = HKSampleType.quantityType(forIdentifier: .height) else {
       print("Height Sample Type is no longer available in HealthKit")
       return
@@ -129,6 +130,8 @@ class ProfileViewController: UITableViewController {
         return
       }
       
+      //2. Convert the height sample to meters, save to the profile model,
+      //   and update the user interface.
       let heightInMeters = sample.quantity.doubleValue(for: HKUnit.meter())
       self.userHealthProfile.heightInMeters = heightInMeters
       self.updateLabels()
