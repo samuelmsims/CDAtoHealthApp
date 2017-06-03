@@ -64,6 +64,7 @@ class ProfileDataStore {
   class func getMostRecentSample(for sampleType: HKSampleType,
                                  completion: @escaping (HKQuantitySample?, Error?) -> Swift.Void) {
     
+    //1. Use HKQuery to load the most recent samples.
     let mostRecentPredicate = HKQuery.predicateForSamples(withStart: Date.distantPast,
                                                           end: Date(),
                                                           options: .strictEndDate)
@@ -78,6 +79,7 @@ class ProfileDataStore {
                                     limit: limit,
                                     sortDescriptors: [sortDescriptor]) { (query, samples, error) in
     
+      //2. Always dispatch to the main thread when complete.
       DispatchQueue.main.async {
         
         guard let samples = samples,
