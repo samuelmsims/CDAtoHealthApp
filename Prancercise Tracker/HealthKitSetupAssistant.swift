@@ -51,8 +51,9 @@ class HealthKitSetupAssistant {
             let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
             let bodyMassIndex = HKObjectType.quantityType(forIdentifier: .bodyMassIndex),
             let height = HKObjectType.quantityType(forIdentifier: .height),
+            let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
             let activeEnergy = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) else {
-              
+        
             completion(false, HealthkitSetupError.dataTypeNotAvailable)
             return
     }
@@ -67,8 +68,9 @@ class HealthKitSetupAssistant {
                                                    biologicalSex,
                                                    bodyMassIndex,
                                                    height,
+                                                   bodyMass,
                                                    HKObjectType.workoutType()]
-
+    
     //4. Request Authorization
     HKHealthStore().requestAuthorization(toShare: healthKitTypesToWrite,
                                          read: healthKitTypesToRead) { (success, error) in
