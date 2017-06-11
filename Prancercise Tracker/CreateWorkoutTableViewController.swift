@@ -177,7 +177,7 @@ class CreateWorkoutTableViewController: UITableViewController {
     tableView.reloadData()
   }
   
-  func startStopButtonPressed() {
+  @objc func startStopButtonPressed() {
     
     switch session.state {
       
