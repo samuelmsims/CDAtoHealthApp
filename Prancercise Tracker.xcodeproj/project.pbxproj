@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35BB36A9204355E700D5AECB /* cdaimporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BB36A8204355E700D5AECB /* cdaimporter.swift */; };
+		6593B0A94E35B8A6E601976C /* Pods_Prancercise_Tracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C019C8CAA4B858B4BAC912 /* Pods_Prancercise_Tracker.framework */; };
 		AC5F98D91EBEBFC600CA4444 /* WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5F98D81EBEBFC600CA4444 /* WorkoutSession.swift */; };
 		AC732B6A1EAEABEF0062303D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC732B691EAEABEF0062303D /* HealthKit.framework */; };
 		AC891D711EDDBCEB00A0F84A /* WorkoutDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC891D701EDDBCEB00A0F84A /* WorkoutDataStore.swift */; };
@@ -27,6 +29,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1AFB17B898DD759C19963912 /* Pods-Prancercise Tracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prancercise Tracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Prancercise Tracker/Pods-Prancercise Tracker.debug.xcconfig"; sourceTree = "<group>"; };
+		35BB36A8204355E700D5AECB /* cdaimporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cdaimporter.swift; sourceTree = "<group>"; };
+		91C019C8CAA4B858B4BAC912 /* Pods_Prancercise_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Prancercise_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1BA50C1EAE5D2F00C99FE3 /* Prancercise Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Prancercise Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC5F98D81EBEBFC600CA4444 /* WorkoutSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSession.swift; sourceTree = SOURCE_ROOT; };
 		AC732B651EAEAB940062303D /* Prancercise Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Prancercise Tracker.entitlements"; path = "Prancercise Tracker/Prancercise Tracker.entitlements"; sourceTree = SOURCE_ROOT; };
@@ -47,6 +52,7 @@
 		AC8EAC071EAEA8E5002DD041 /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Workout.swift; path = "Prancercise Tracker/Workout.swift"; sourceTree = SOURCE_ROOT; };
 		ACF4F91D1EB0EF310031154C /* UserHealthProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHealthProfile.swift; sourceTree = SOURCE_ROOT; };
 		ACF4F9221EB214C00031154C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Prancercise Tracker/Base.lproj/LaunchScreen.xib"; sourceTree = SOURCE_ROOT; };
+		F836DEE31EBE3F1571EC9D9A /* Pods-Prancercise Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prancercise Tracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Prancercise Tracker/Pods-Prancercise Tracker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,18 +61,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC732B6A1EAEABEF0062303D /* HealthKit.framework in Frameworks */,
+				6593B0A94E35B8A6E601976C /* Pods_Prancercise_Tracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		519D34F673FBED72140AF05C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1AFB17B898DD759C19963912 /* Pods-Prancercise Tracker.debug.xcconfig */,
+				F836DEE31EBE3F1571EC9D9A /* Pods-Prancercise Tracker.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		AC1BA5031EAE5D2F00C99FE3 = {
 			isa = PBXGroup;
 			children = (
 				AC1BA50E1EAE5D2F00C99FE3 /* Prancercise Tracker */,
 				AC1BA50D1EAE5D2F00C99FE3 /* Products */,
 				AC732B661EAEAB940062303D /* Frameworks */,
+				519D34F673FBED72140AF05C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +98,7 @@
 		AC1BA50E1EAE5D2F00C99FE3 /* Prancercise Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				35BB36A8204355E700D5AECB /* cdaimporter.swift */,
 				AC732B651EAEAB940062303D /* Prancercise Tracker.entitlements */,
 				AC1BA52F1EAE5E5400C99FE3 /* View Controllers */,
 				AC8EABDB1EAE88DB002DD041 /* Models */,
@@ -113,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				AC732B691EAEABEF0062303D /* HealthKit.framework */,
+				91C019C8CAA4B858B4BAC912 /* Pods_Prancercise_Tracker.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,9 +162,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AC1BA51E1EAE5D2F00C99FE3 /* Build configuration list for PBXNativeTarget "Prancercise Tracker" */;
 			buildPhases = (
+				1870B18B8FF2F47538F33F57 /* [CP] Check Pods Manifest.lock */,
 				AC1BA5081EAE5D2F00C99FE3 /* Sources */,
 				AC1BA5091EAE5D2F00C99FE3 /* Frameworks */,
 				AC1BA50A1EAE5D2F00C99FE3 /* Resources */,
+				CEF0C14F9500A952E0D4E94F /* [CP] Embed Pods Frameworks */,
+				7DBA481DFF0FEC596F6F9507 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -168,7 +190,7 @@
 				TargetAttributes = {
 					AC1BA50B1EAE5D2F00C99FE3 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = N79LQXAXD6;
+						DevelopmentTeam = BSP2364924;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -210,6 +232,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1870B18B8FF2F47538F33F57 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Prancercise Tracker-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7DBA481DFF0FEC596F6F9507 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Prancercise Tracker/Pods-Prancercise Tracker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CEF0C14F9500A952E0D4E94F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Prancercise Tracker/Pods-Prancercise Tracker-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Prancercise Tracker/Pods-Prancercise Tracker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AC1BA5081EAE5D2F00C99FE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -225,6 +301,7 @@
 				AC8EABEE1EAEA855002DD041 /* MasterViewController.swift in Sources */,
 				AC891D711EDDBCEB00A0F84A /* WorkoutDataStore.swift in Sources */,
 				AC8EABEF1EAEA855002DD041 /* ProfileViewController.swift in Sources */,
+				35BB36A9204355E700D5AECB /* cdaimporter.swift in Sources */,
 				AC8EAC081EAEA8E5002DD041 /* Workout.swift in Sources */,
 				AC8EABF91EAEA895002DD041 /* HKBiologicalSex+StringRepresentation.swift in Sources */,
 				AC5F98D91EBEBFC600CA4444 /* WorkoutSession.swift in Sources */,
@@ -362,13 +439,15 @@
 		};
 		AC1BA51F1EAE5D2F00C99FE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AFB17B898DD759C19963912 /* Pods-Prancercise Tracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Prancercise Tracker/Prancercise Tracker.entitlements";
-				DEVELOPMENT_TEAM = N79LQXAXD6;
+				DEVELOPMENT_TEAM = BSP2364924;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Prancercise Tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Razeware.Prancercise-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Razeware.Prancercise-Tracker-FINAL";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
@@ -377,13 +456,19 @@
 		};
 		AC1BA5201EAE5D2F00C99FE3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F836DEE31EBE3F1571EC9D9A /* Pods-Prancercise Tracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Prancercise Tracker/Prancercise Tracker.entitlements";
-				DEVELOPMENT_TEAM = N79LQXAXD6;
+				DEVELOPMENT_TEAM = BSP2364924;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Fuzi\"",
+					"$(SRCROOT)",
+				);
 				INFOPLIST_FILE = "Prancercise Tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Razeware.Prancercise-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Razeware.Prancercise-Tracker-FINAL";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;

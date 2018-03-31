@@ -29,6 +29,7 @@
  */
 
 import HealthKit
+import Fuzi
 
 class ProfileDataStore {
 
@@ -36,10 +37,12 @@ class ProfileDataStore {
                                                 biologicalSex: HKBiologicalSex,
                                                 bloodType: HKBloodType) {
     
-    let healthKitStore = HKHealthStore()
     
+    let healthKitStore = HKHealthStore()
+                                                    
     do {
-      
+        
+        
       //1. This method throws an error if these data are not available.
       let birthdayComponents =  try healthKitStore.dateOfBirthComponents()
       let biologicalSex =       try healthKitStore.biologicalSex()
@@ -58,6 +61,10 @@ class ProfileDataStore {
       let unwrappedBloodType = bloodType.bloodType
       
       return (age, unwrappedBiologicalSex, unwrappedBloodType)
+    }
+    catch let error {
+        print(error)
+        return (35, HKBiologicalSex.female, HKBloodType.abNegative)
     }
   }
   
@@ -122,5 +129,203 @@ class ProfileDataStore {
       }
     }
   }
+    
+  class func saveHKQuantitySample(qtyType: HKQuantityTypeIdentifier,  indexValue: Double, date: Date, idxType: HKUnit) {
+    
+        let healthKitStore = HKHealthStore()
+    
+        //1.  Make sure the type exists
+        guard let indexType = HKQuantityType.quantityType(forIdentifier: qtyType) else {
+            fatalError("Index Type is no longer available in HealthKit")
+        }
+        
+        //2.  Use the Count HKUnit to create a quantity
+        let indxQuantity = HKQuantity(unit: idxType,  doubleValue: indexValue)
+    
+    
+        //check to see if sample exist
+        let predicate = HKQuery.predicateForSamples(withStart: date, end: nil)
+    
+        let idxSample = HKQuantitySample(type: indexType,
+                                         quantity: indxQuantity,
+                                         start: date,
+                                         end: date)
+    
+        let dupCheckquery = HKSampleQuery(sampleType: indexType, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) {
+            query, results, error in
+            
+            guard let samples = results as? [HKQuantitySample] else {
+                fatalError("An error occured fetching the user's sample. The error was: \(String(describing: error?.localizedDescription))");
+            }
+            
+            if (samples.count == 0) {
+                HKHealthStore().save(idxSample) { (success, error) in
+                    
+                    if let error = error {
+                        print("Error  Sample: \(error.localizedDescription)")
+                    } else {
+                        print("Successfully saved Sample")
+                        //updatexmlConvStatusText(indexType as String + " updated!")
+                    }
+                }
+                
+            }
+            
+            for sample in samples {
+                if (sample.quantity == indxQuantity){
+                    print("Sample already defined.  Skipping: " + indexType.description + " Date: " + sample.startDate.description)
+                }
+                else{
+                    HKHealthStore().save(idxSample) { (success, error) in
+                        
+                        if let error = error {
+                            print("Error  Sample: \(error.localizedDescription)")
+                        } else {
+                            print("Successfully saved Sample")
+                            //updatexmlConvStatusText(indexType as String + " updated!")
+                        }
+                    }
+                }
+            }
+            
+        }
+    
+        healthKitStore.execute(dupCheckquery)
+    
+    }
+  
+  class func convertCCDXMLfunc() {
+    
+    let healthKitStore = HKHealthStore()
+    
+    guard let cdaType = HKObjectType.documentType(forIdentifier: .CDA) else {
+        fatalError("Unable to create a CDA document type.")
+    }
+
+    //read for cda documents. they can be more than one
+    
+    let cdaQuery2 = HKDocumentQuery(documentType: cdaType, predicate: nil, limit:
+    1, sortDescriptors: nil, includeDocumentData: true) { query, samples,
+        done, error in
+        
+        if done {
+            return
+        }
+        
+        print ("processing CDA file")
+        
+        guard let cdaDatasamples = samples as? [HKCDADocumentSample] else {fatalError("Unable to create a CDA sample.")}
+        
+        guard let healthDocumentData = cdaDatasamples.first?.document?.documentData else {fatalError("Unable to create a CDA data.")}
+        
+        let text = NSString(data: healthDocumentData, encoding: String.Encoding.utf8.rawValue) as! String
+        
+        ImportCDAXML(XMLString: text)
+    
+    }
+    
+    healthKitStore.execute(cdaQuery2)
+    
+  }
+  
+    
+  class func ImportCDAXML(XMLString: String){
+    
+    do{
+        let doc = try XMLDocument(string: XMLString, encoding: String.Encoding.utf8)
+        
+        //parse document
+        
+        if let root = doc.root {
+            if let root_element_name = root.tag, root_element_name == "ClinicalDocument" {
+                
+                //set prefix for xpath filtering
+                
+                doc.definePrefix("cda", defaultNamespace: "urn:hl7-org:v3")
+                
+                //check for vital sections
+                
+                if doc.xpath("/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='2.16.840.1.113883.10.20.22.2.4']").first != nil {
+                   
+                    print("Found patient vitals")
+                    
+                    for (index, element) in doc.xpath("/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:organizer/cda:component/cda:observation").enumerated(){
+                        
+                        //this section is for vitals only
+                        
+                        if (element.description as NSString).contains("2.16.840.1.113883.10.20.22.4.27"){
+                            
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                           
+                            let strDate = element.firstChild(tag: "effectiveTime")?.attr("value") as String?
+                            
+                            let yrlowerBound = String.Index(encodedOffset: 0)
+                            let yrupperBound = String.Index(encodedOffset: 4)
+                            let year = strDate![yrlowerBound..<yrupperBound]
+        
+                            let lowerBound = String.Index(encodedOffset: 4)
+                            let upperBound = String.Index(encodedOffset: 6)
+                            let month = strDate![lowerBound..<upperBound]
+        
+                            let dlowerBound = String.Index(encodedOffset: 6)
+                            let dupperBound = String.Index(encodedOffset: 8)
+                            let day = strDate![dlowerBound..<dupperBound]
+                            
+                            let dateString = (year + "-" + month + "-" + day)
+                            
+                            let recdate = dateFormatter.date(from: dateString)! as NSDate
+                           
+                            let qtyValue = element.firstChild(tag: "value")?.attr("value") as! NSString
+                            
+                            if (element.description as NSString).contains("weight"){
+                                saveHKQuantitySample(qtyType: HKQuantityTypeIdentifier.bodyMass,  indexValue: qtyValue.doubleValue, date: recdate as Date, idxType: HKUnit.pound())
+                            }
+                            
+                            
+                            if (element.description as NSString).contains("bmi"){
+                                saveHKQuantitySample(qtyType: HKQuantityTypeIdentifier.bodyMassIndex,  indexValue: qtyValue.doubleValue, date: recdate as Date, idxType: HKUnit.count())
+                            }
+                            
+                            if (element.description as NSString).contains("height"){
+                                saveHKQuantitySample(qtyType: HKQuantityTypeIdentifier.height, indexValue: qtyValue.doubleValue, date: recdate as Date, idxType: HKUnit.inch())
+                            }
+                            
+                            
+                            if (element.description as NSString).contains("temperature"){
+                                saveHKQuantitySample(qtyType: HKQuantityTypeIdentifier.bodyTemperature, indexValue: qtyValue.doubleValue, date: recdate as Date, idxType: HKUnit.degreeFahrenheit())
+                            }
+
+                            if (element.description as NSString).contains("heart rate"){
+                                //print("\(String(describing: element.description)): \(element.stringValue)")
+                                
+                                if #available(iOS 11.0, *) {
+                                  //  let unit = HKUnit.count().unitDivided(by: HKUnit.count())
+                                    
+                                    saveHKQuantitySample(qtyType: HKQuantityTypeIdentifier.heartRate, indexValue: qtyValue.doubleValue, date: recdate as Date, idxType: HKUnit.count().unitDivided(by: HKUnit.minute()))
+                                } else {
+                                    // Fallback on earlier versions
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                    
+                }
+                
+
+                
+                
+            }
+            
+        }
+        
+    }
+    catch {}
+    }
+ 
+    
+    
 }
 

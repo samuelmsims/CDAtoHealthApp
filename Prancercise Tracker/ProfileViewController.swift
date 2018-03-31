@@ -34,6 +34,7 @@ import HealthKit
 class ProfileViewController: UITableViewController {
     
   private enum ProfileSection: Int {
+    case convertCCDXML
     case ageSexBloodType
     case weightHeightBMI
     case readHealthKitData
@@ -58,13 +59,19 @@ class ProfileViewController: UITableViewController {
   @IBOutlet private var weightLabel:UILabel!
   @IBOutlet private var heightLabel:UILabel!
   @IBOutlet private var bodyMassIndexLabel:UILabel!
-  
+  @IBOutlet public var xmlConvStatus: UITextView!
+ 
   private let userHealthProfile = UserHealthProfile()
   
   private func updateHealthInfo() {
     loadAndDisplayAgeSexAndBloodType()
     loadAndDisplayMostRecentWeight()
     loadAndDisplayMostRecentHeight()
+  }
+    
+  private func updateCCDtoQty(){
+    ProfileDataStore.convertCCDXMLfunc()
+    return
   }
   
   private func loadAndDisplayAgeSexAndBloodType() {
@@ -185,6 +192,10 @@ class ProfileViewController: UITableViewController {
     present(alert, animated: true, completion: nil)
   }
   
+  public func updatexmlConvStatusText(message: String){
+     xmlConvStatus.text = xmlConvStatus.text + message + "\n"
+  }
+    
   //MARK:  UITableView Delegate
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
@@ -197,6 +208,8 @@ class ProfileViewController: UITableViewController {
       saveBodyMassIndexToHealthKit()
     case .readHealthKitData:
       updateHealthInfo()
+    case .convertCCDXML:
+        updateCCDtoQty()
     default: break
     }
   }
