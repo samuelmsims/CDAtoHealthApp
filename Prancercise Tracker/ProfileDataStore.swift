@@ -134,12 +134,12 @@ class ProfileDataStore {
     
         let healthKitStore = HKHealthStore()
     
-        //1.  Make sure the type exists
+        // Make sure the type exists
         guard let indexType = HKQuantityType.quantityType(forIdentifier: qtyType) else {
             fatalError("Index Type is no longer available in HealthKit")
         }
         
-        //2.  Use the Count HKUnit to create a quantity
+        //Use the Count HKUnit to create a quantity
         let indxQuantity = HKQuantity(unit: idxType,  doubleValue: indexValue)
     
     
@@ -158,6 +158,7 @@ class ProfileDataStore {
                 fatalError("An error occured fetching the user's sample. The error was: \(String(describing: error?.localizedDescription))");
             }
             
+            //if not samples found then create inital record
             if (samples.count == 0) {
                 HKHealthStore().save(idxSample) { (success, error) in
                     
@@ -165,12 +166,12 @@ class ProfileDataStore {
                         print("Error  Sample: \(error.localizedDescription)")
                     } else {
                         print("Successfully saved Sample")
-                        //updatexmlConvStatusText(indexType as String + " updated!")
                     }
                 }
                 
             }
             
+            //check for duplicates
             for sample in samples {
                 if (sample.quantity == indxQuantity){
                     print("Sample already defined.  Skipping: " + indexType.description + " Date: " + sample.startDate.description)
@@ -220,6 +221,8 @@ class ProfileDataStore {
         
         let text = NSString(data: healthDocumentData, encoding: String.Encoding.utf8.rawValue) as! String
         
+        
+        //process document xml
         ImportCDAXML(XMLString: text)
     
     }
@@ -243,7 +246,7 @@ class ProfileDataStore {
                 
                 doc.definePrefix("cda", defaultNamespace: "urn:hl7-org:v3")
                 
-                //check for vital sections
+                //check for vital sections via xpath.  could be a a better way bu this is what I came up with
                 
                 if doc.xpath("/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:templateId[@root='2.16.840.1.113883.10.20.22.2.4']").first != nil {
                    
@@ -254,6 +257,8 @@ class ProfileDataStore {
                         //this section is for vitals only
                         
                         if (element.description as NSString).contains("2.16.840.1.113883.10.20.22.4.27"){
+                            
+                            //format effect date
                             
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -297,7 +302,6 @@ class ProfileDataStore {
                             }
 
                             if (element.description as NSString).contains("heart rate"){
-                                //print("\(String(describing: element.description)): \(element.stringValue)")
                                 
                                 if #available(iOS 11.0, *) {
                                   //  let unit = HKUnit.count().unitDivided(by: HKUnit.count())
